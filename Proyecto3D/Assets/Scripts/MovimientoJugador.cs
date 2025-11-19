@@ -6,24 +6,43 @@ public class MovimientoJugador : MonoBehaviour
 {
     public float velocidadMovimiento = 5f;
     public float velocidadRotacion = 5f;
-    public CharacterController characterController;
+
     public Transform transformJugador;
     public Camera camaraJugador;
-    public Vector3 movimiento;
+
     public float rotacionX;
+
+    private Rigidbody rb;
+
+    void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+
+        rb.freezeRotation = true;
+
+        Cursor.lockState = CursorLockMode.Locked;
+    }
 
     void Update()
     {
-        MoviemientoDelJugador();
+        MovimientoDelJugador();
         MovimientoDeCamara();
     }
-    void MoviemientoDelJugador()
+
+    void MovimientoDelJugador()
     {
         float movX = Input.GetAxis("Horizontal");
         float movZ = Input.GetAxis("Vertical");
 
-        movimiento = transform.right * movX + transform.forward * movZ;
-        characterController.SimpleMove(movimiento * velocidadMovimiento);
+        Vector3 direccion = transformJugador.right * movX + transformJugador.forward * movZ;
+
+        Vector3 velocidadActual = rb.velocity;
+
+        rb.velocity = new Vector3(
+            direccion.x * velocidadMovimiento,
+            velocidadActual.y,
+            direccion.z * velocidadMovimiento
+        );
     }
 
     void MovimientoDeCamara()
@@ -33,8 +52,8 @@ public class MovimientoJugador : MonoBehaviour
 
         rotacionX -= ratonY;
         rotacionX = Mathf.Clamp(rotacionX, -90f, 90f);
-
         camaraJugador.transform.localRotation = Quaternion.Euler(rotacionX, 0, 0);
+
         transformJugador.Rotate(Vector3.up * ratonX);
     }
 }
