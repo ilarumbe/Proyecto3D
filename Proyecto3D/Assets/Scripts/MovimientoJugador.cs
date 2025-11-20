@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MovimientoJugador : MonoBehaviour
 {
-    public float velocidadMovimiento = 5f;
+    public float velocidadMovimiento = 2f;
     public float velocidadRotacion = 5f;
 
     public Transform transformJugador;
