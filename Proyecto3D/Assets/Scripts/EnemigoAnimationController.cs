@@ -7,7 +7,7 @@ public class EnemigoAnimationController : MonoBehaviour
     public Animator animator;
     public UnityEngine.AI.NavMeshAgent agent;
 
-    public float movementThreshold = 0.2f;
+    public float movementThreshold = 0.05f;
 
     void Update()
     {
